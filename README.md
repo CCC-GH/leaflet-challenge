@@ -4,7 +4,7 @@
 
 ## [GitHub Hosted Page](https://ccc-gh.github.io/leaflet-challenge/)
 
-![App Picture](Actual_App_Small.PNG)
+![App Picture](Actual_App_Small.png)
 
 ## Background
 
