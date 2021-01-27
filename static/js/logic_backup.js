@@ -1,7 +1,6 @@
 // Query URL for week's earthquakes data (url from HW readme)
 eqLink = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson';
-tpLink = 'https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json'
-    // Get request to query URL
+// Get request to query URL
 d3.json(eqLink).then((data) => {
     // Send data object to features
     createFeatures(data.features);
@@ -77,31 +76,17 @@ function createMap(earthquakes) {
         'Dark': dark
     };
 
-    // Tectonic plates layer
-    tectonicPlates = new L.LayerGroup();
-
     overlay = {
-        'Earthquakes': earthquakes,
-        'Tectonic Plates': tectonicPlates
+        earthquakes: earthquakes
     };
 
-    // Load map with good center and zoom
+    // Set view-Center Willis Tower
     myMap = L.map('mapid', {
-        center: [5, 15],
-        zoom: 2,
-        layers: [satellite, earthquakes, tectonicPlates]
+        center: [41.87884, -87.63597],
+        zoom: 4,
+        layers: [satellite, earthquakes]
     });
 
-    // Add tectonic plates data
-    d3.json(tpLink).then((tpData) => {
-        L.geoJson(tpData, {
-                color: 'white',
-                weight: 2
-            })
-            .addTo(tectonicPlates);
-    });
-
-    // Add Theme control
     L.control.layers(mapTheme, overlay, {
         collapsed: false
     }).addTo(myMap);
@@ -122,7 +107,7 @@ function createMap(earthquakes) {
             return 'SpringGreen'
         }
     };
-    legend = L.control({ position: 'bottomright' });
+    legend = L.control({ position: 'topright' });
     legend.onAdd = function(myMap) {
         div = L.DomUtil.create('div', 'info legend')
         legendColors = [0, 1, 2, 3, 4, 5]
